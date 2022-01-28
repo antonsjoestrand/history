@@ -1,4 +1,5 @@
 import Head from "next/head";
+import { useEffect, useState } from 'react';
 import styled from "styled-components";
 
 function Hello() {
@@ -8,6 +9,15 @@ function Hello() {
     text-align: center;
   `;
 
+  const [photos, setPhotos] = useState([]);
+
+  useEffect(async() => {
+    const response = await fetch("http://localhost:3005/api/flickr");
+    const result = await response.json();
+    setPhotos(result.photos);
+  }, []);
+
+
   return (
     <div>
       <Head>
@@ -16,6 +26,11 @@ function Hello() {
       </Head>
       <h1>
         <HelloWorld>Hello World!</HelloWorld>
+        <ul>
+          {photos.map((photo) => (
+            <img src={photo.path} alt={photo.alt} />
+          ))}
+        </ul>
       </h1>
     </div>
   );
