@@ -4,19 +4,24 @@ import Head from 'next/head'
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 
-function Hello() {
-  const HelloWorld = styled.h1`
-    font-size: 6rem;
-    color: crimson;
-    text-align: center;
-  `
+const HelloWorld = styled.h1`
+  font-size: 6rem;
+  color: crimson;
+  text-align: center;
+`
 
+function Hello() {
   const [photos, setPhotos] = useState([])
+  const [hasError, setError] = useState(false)
 
   useEffect(async () => {
-    const response = await fetch('http://localhost:3005/api/flickr')
-    const result = await response.json()
-    setPhotos(result.photos)
+    try {
+      const response = await fetch('http://localhost:3005/api/flickr')
+      const result = await response.json()
+      setPhotos(result.photos)
+    } catch (e) {
+      setError(true)
+    }
   }, [])
 
   return (
@@ -27,9 +32,10 @@ function Hello() {
       </Head>
       <h1>
         <HelloWorld>Hello World!</HelloWorld>
+        {hasError && 'Sorry try again later'}
         <ul>
           {photos.map((photo) => (
-            <img src={photo.path} alt={photo.alt} width="200" height="140" />
+            <img key={photo.path} src={photo.path} alt={photo.alt} width="200" height="140" />
           ))}
         </ul>
       </h1>
