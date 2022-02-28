@@ -63,7 +63,11 @@ function AlbumPage({ items = [] }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       {searchBox}
-      <SplitViewer setViewed={setViewed} items={filtered} refImageGallery={refImageGallery} />
+      <SplitViewer
+        setViewed={setViewed}
+        items={filtered}
+        refImageGallery={refImageGallery}
+      />
       {memoryHtml}
       <Wrapper>
         {filtered.map((item, index) => (
@@ -73,7 +77,8 @@ function AlbumPage({ items = [] }) {
             caption={item.caption}
             key={item.filename}
             id={`select${item.id}`}
-            viewed={(viewedList.includes(index))}
+            viewed={viewedList.includes(index)}
+            link="/demo/sample/nearby"
           />
         ))}
       </Wrapper>

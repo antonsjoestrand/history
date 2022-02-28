@@ -5,7 +5,6 @@ import Img from '../Img'
 
 const Bullet = styled.li`
   width: 195px;
-  height: 110px;
   background-color: #545454;
   padding-bottom: 6px;
   float: left;
